@@ -1,0 +1,32 @@
+environment: "development"
+replicaCount: 1
+
+image:
+  # This tells Helm to pull the latest code merged into the develop branch
+  tag: "develop" 
+
+api:
+  repository: ghcr.io/kkarka/video-transcriber-api
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "128Mi"
+    limits:
+      cpu: "250m"
+      memory: "256Mi"
+
+worker:
+  repository: ghcr.io/kkarka/video-transcriber-worker
+
+frontend:
+  repository: ghcr.io/kkarka/video-transcriber-frontend
+
+ingress:
+  enabled: true
+  # For local testing
+  host: "dev.arkadevops.local" 
+
+# We will encrypt the actual password shortly!
+database:
+  user: "transcriber_user"
+  databaseName: "transcriber_db"

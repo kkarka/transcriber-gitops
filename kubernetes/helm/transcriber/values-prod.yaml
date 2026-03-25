@@ -1,0 +1,31 @@
+environment: "production"
+replicaCount: 3 # High availability!
+
+image:
+  # This will be overridden by ArgoCD or your CI/CD pipeline during a release
+  tag: "v1.0.0" 
+
+api:
+  repository: ghcr.io/kkarka/video-transcriber-api
+  resources:
+    requests:
+      cpu: "500m"
+      memory: "512Mi"
+    limits:
+      cpu: "1000m"
+      memory: "1Gi"
+
+worker:
+  repository: ghcr.io/kkarka/video-transcriber-worker
+
+frontend:
+  repository: ghcr.io/kkarka/video-transcriber-frontend
+
+ingress:
+  enabled: true
+  # Your actual production domain
+  host: "transcriber.arkadevops.in" 
+
+database:
+  user: "transcriber_user"
+  databaseName: "transcriber_db"

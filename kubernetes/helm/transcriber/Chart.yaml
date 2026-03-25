@@ -1,0 +1,6 @@
+apiVersion: v2
+name: transcriber
+description: A GitOps-managed Helm chart for the Video Transcriber Application stack
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
