@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: transcriber-dev
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/kkarka/transcriber-gitops.git'
+    targetRevision: main
+    path: kubernetes/helm/transcriber
+    helm:
+      # This tells Helm to use the DEV environment variables
+      valueFiles:
+        - values-dev.yaml
+  destination:
+    server: 'https://kubernetes.default.svc'
+    # This will deploy your app into a namespace called 'transcriber-dev'
+    namespace: transcriber-dev 
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

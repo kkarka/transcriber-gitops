@@ -1,0 +1,36 @@
+# kubernetes/helm/transcriber/templates/worker.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transcriber-worker
+  labels:
+    app: worker
+spec:
+  # Workers can often be scaled independently, but we'll tie it to replicaCount for now
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: worker
+  template:
+    metadata:
+      labels:
+        app: worker
+    spec:
+      containers:
+        - name: worker
+          image: "{{ .Values.worker.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: Always
+          env:
+            - name: POSTGRES_USER
+              value: "{{ .Values.database.user }}"
+            - name: POSTGRES_DB
+              value: "{{ .Values.database.databaseName }}"
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: transcriber-db-secret
+                  key: POSTGRES_PASSWORD
+            - name: REDIS_HOST
+              value: "transcriber-redis"
+            - name: DB_HOST
+              value: "transcriber-postgres"

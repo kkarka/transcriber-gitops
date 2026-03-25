@@ -1,0 +1,35 @@
+# kubernetes/helm/transcriber/templates/frontend.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transcriber-frontend
+  labels:
+    app: frontend
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - name: frontend
+          image: "{{ .Values.frontend.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080 # Based on your Nginx unprivileged port
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transcriber-frontend
+spec:
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
