@@ -1,0 +1,26 @@
+{{- if .Values.ingress.enabled -}}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: transcriber-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: "{{ .Values.ingress.host }}"
+      http:
+        paths:
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: transcriber-api
+                port:
+                  number: 80
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: transcriber-frontend
+                port:
+                  number: 80
+{{- end }}
