@@ -3,7 +3,7 @@ replicaCount: 1
 
 image:
   # This tells Helm to pull the latest code merged into the develop branch
-  tag: "1.0.3" 
+  tag: "1.0.4" 
 
 api:
   repository: ghcr.io/kkarka/video-transcriber-api
