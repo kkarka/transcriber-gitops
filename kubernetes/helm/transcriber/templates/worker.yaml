@@ -17,7 +17,7 @@ spec:
         app: worker
     spec:
       containers:
-        - name: worker
+        - name: {{ .Chart.Name }}-worker
           image: "{{ .Values.worker.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: Always
           env:
@@ -34,3 +34,10 @@ spec:
               value: "transcriber-redis"
             - name: DB_HOST
               value: "transcriber-postgres"
+          volumeMounts:
+            - name: uploads-volume
+              mountPath: /app/uploads
+      volumes:
+        - name: uploads-volume
+          persistentVolumeClaim:
+            claimName: {{ include "transcriber.fullname" . }}-uploads
