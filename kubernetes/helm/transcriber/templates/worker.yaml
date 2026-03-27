@@ -17,7 +17,7 @@ spec:
         app: worker
     spec:
       containers:
-        - name: {{ .Chart.Name }}-worker
+        - name: worker
           image: "{{ .Values.worker.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: Always
           env:
@@ -40,4 +40,4 @@ spec:
       volumes:
         - name: uploads-volume
           persistentVolumeClaim:
-            claimName: {{ include "transcriber.fullname" . }}-uploads
+            claimName: transcriber-uploads

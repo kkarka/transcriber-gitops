@@ -16,7 +16,7 @@ spec:
         app: api
     spec:
       containers:
-        - name: {{ .Chart.Name }}-api
+        - name: api
           # Dynamically pulls from your GitHub Container Registry
           image: "{{ .Values.api.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: Always
@@ -48,7 +48,7 @@ spec:
       volumes:
         - name: uploads-volume
           persistentVolumeClaim:
-            claimName: {{ include "transcriber.fullname" . }}-uploads
+            claimName: transcriber-uploads
 ---
 apiVersion: v1
 kind: Service
