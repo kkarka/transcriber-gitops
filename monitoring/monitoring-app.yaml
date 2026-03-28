@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-monitoring
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # We point ArgoCD directly to the official community repository
+    repoURL: https://prometheus-community.github.io/helm-charts
+    chart: kube-prometheus-stack
+    targetRevision: 58.2.1 
+    helm:
+      releaseName: prometheus
+      valuesObject:
+        grafana:
+          # 1. Pull the secret into a Grafana Environment Variable
+          envValueFrom:
+            SMTP_PASSWORD:
+              secretKeyRef:
+                name: grafana-smtp-secret
+                key: password
+          
+          # 2. Configure Microsoft SMTP using that variable
+          grafana.ini:
+            smtp:
+              enabled: true
+              host: smtp.gmail.com:587
+              user: "arkadevops5@gmail.com"              # Your actual Gmail address
+              password: "$__env{SMTP_PASSWORD}"
+              skip_verify: true
+              from_address: "arkadevops5@gmail.com"      # Match the user email above
+              from_name: "Transcriber Cluster Alerts"
+  
+  destination:
+    server: https://kubernetes.default.svc
+    # We will put all monitoring tools in their own dedicated namespace
+    namespace: monitoring
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      # Tell ArgoCD to create the 'monitoring' namespace if it doesn't exist
+      - CreateNamespace=true
+      # This prevents issues with ArgoCD managing complex Prometheus CRDs
+      - ServerSideApply=true
