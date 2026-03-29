@@ -34,6 +34,23 @@ spec:
               value: "transcriber-redis"
             - name: DB_HOST
               value: "transcriber-postgres"
+            # --- NEW HYBRID STORAGE VARS ---
+            - name: STORAGE_MODE
+              value: "{{ .Values.storage.mode }}"
+            - name: S3_VIDEO_BUCKET_NAME
+              value: "{{ .Values.storage.bucketName }}"
+            - name: AWS_DEFAULT_REGION
+              value: "{{ .Values.storage.region }}"
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: transcriber-aws-secret
+                  key: AWS_ACCESS_KEY_ID
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: transcriber-aws-secret
+                  key: AWS_SECRET_ACCESS_KEY
           volumeMounts:
             - name: uploads-volume
               mountPath: /app/uploads

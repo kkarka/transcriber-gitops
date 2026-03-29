@@ -15,6 +15,7 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+.ctxt
 
 # Downloaded Binaries and Archives
 kubeseal

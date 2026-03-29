@@ -30,3 +30,9 @@ ingress:
 database:
   user: "transcriber_user"
   databaseName: "transcriber_db"
+
+
+storage:
+  mode: "s3"
+  bucketName: "transcriber-uploads-storage-arka-dev" # Make sure this matches your actual S3 bucket name
+  region: "ap-south-1"
