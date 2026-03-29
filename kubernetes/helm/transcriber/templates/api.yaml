@@ -59,13 +59,13 @@ spec:
           # Dynamically injects the CPU/Memory limits based on the environment
           resources:
             {{- toYaml .Values.api.resources | nindent 12 }}
-          volumeMounts:
-            - name: uploads-volume
-              mountPath: /app/uploads
-      volumes:
-        - name: uploads-volume
-          persistentVolumeClaim:
-            claimName: transcriber-uploads
+          # volumeMounts:
+          #   - name: uploads-volume
+          #     mountPath: /app/uploads
+      # volumes:
+      #   - name: uploads-volume
+      #     persistentVolumeClaim:
+      #       claimName: transcriber-uploads
 ---
 apiVersion: v1
 kind: Service

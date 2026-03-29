@@ -51,10 +51,10 @@ spec:
                 secretKeyRef:
                   name: transcriber-aws-secret
                   key: AWS_SECRET_ACCESS_KEY
-          volumeMounts:
-            - name: uploads-volume
-              mountPath: /app/uploads
-      volumes:
-        - name: uploads-volume
-          persistentVolumeClaim:
-            claimName: transcriber-uploads
+      #     volumeMounts:
+      #       - name: uploads-volume
+      #         mountPath: /app/uploads
+      # volumes:
+      #   - name: uploads-volume
+      #     persistentVolumeClaim:
+      #       claimName: transcriber-uploads
