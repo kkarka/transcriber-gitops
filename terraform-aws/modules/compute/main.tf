@@ -75,13 +75,13 @@ resource "aws_eks_node_group" "spot_nodes" {
   subnet_ids      = var.subnet_ids
 
   # The magic that makes this affordable!
-  capacity_type  = "SPOT"
-  instance_types = ["t3.micro"] # 8GB RAM, 2 vCPUs
+  capacity_type  = "ON_DEMAND"
+  instance_types = ["t3.micro"] 
 
   scaling_config {
-    desired_size = 2
-    max_size     = 3
-    min_size     = 1
+    desired_size = 8 # 8 nodes = 16 usable pod slots
+    max_size     = 10
+    min_size     = 2
   }
 
   depends_on = [
