@@ -24,7 +24,8 @@ frontend:
 ingress:
   enabled: true
   # For local testing
-  host: "dev.arkadevops.local" 
+  # host: "dev.arkadevops.local" 
+  host: null
 
 # We will encrypt the actual password shortly!
 database:
