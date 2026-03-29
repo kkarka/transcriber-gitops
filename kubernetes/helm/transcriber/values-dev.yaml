@@ -28,8 +28,8 @@ ingress:
 
 # We will encrypt the actual password shortly!
 database:
-  user: "transcriber_user"
-  databaseName: "transcriber_db"
+  user: "postgres"
+  databaseName: "postgres?sslmode=require"
 
 
 storage:
