@@ -23,9 +23,28 @@ frontend:
 
 ingress:
   enabled: true
-  # For local testing
-  # host: "dev.arkadevops.local" 
-  host: null
+  className: "alb" # Change this from nginx to alb
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+  hosts:
+    - host: transcriber.arkadevops.in # Use your subdomain
+      paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: transcriber-frontend
+              port:
+                number: 80
+        - path: /api
+          pathType: Prefix
+          backend:
+            service:
+              name: transcriber-api
+              port:
+                number: 80
 
 # We will encrypt the actual password shortly!
 database:
