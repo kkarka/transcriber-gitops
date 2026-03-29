@@ -28,12 +28,12 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: transcriber-db-secret
+                  name: transcriber-aws-secret
                   key: POSTGRES_PASSWORD
             - name: REDIS_HOST
               value: "transcriber-redis"
             - name: DB_HOST
-              value: "transcriber-postgres"
+              value: "transcriber-db-dev.c1we4qs0wcyx.ap-south-1.rds.amazonaws.com"
             # --- NEW HYBRID STORAGE VARS ---
             - name: STORAGE_MODE
               value: "{{ .Values.storage.mode }}"
