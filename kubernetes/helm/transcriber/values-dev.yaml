@@ -20,11 +20,11 @@ worker:
   repository: ghcr.io/kkarka/video-transcriber-worker
   resources:
     requests:
-      cpu: "500m"
-      memory: "1Gi"   # Minimum guaranteed memory
+      cpu: "200m"
+      memory: "512Mi"   # Minimum guaranteed memory
     limits:
-      cpu: "2000m"    # Allow up to 2 CPUs for faster Whisper processing
-      memory: "2Gi"   # Hard limit to match your docker-compose setup
+      cpu: "1000m"    # Allow up to 2 CPUs for faster Whisper processing
+      memory: "1Gi"   # Hard limit to match your docker-compose setup
 
 frontend:
   repository: ghcr.io/kkarka/video-transcriber-frontend
