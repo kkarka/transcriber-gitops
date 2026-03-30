@@ -23,6 +23,8 @@ spec:
           ports:
             - containerPort: 8000
           env:
+            - name: API_PREFIX
+              value: "/api"
             # Plain-text variables from values.yaml
             - name: POSTGRES_USER
               value: "{{ .Values.database.user }}"
