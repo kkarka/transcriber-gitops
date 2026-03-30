@@ -53,11 +53,11 @@ spec:
                   key: AWS_SECRET_ACCESS_KEY
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
-      #     volumeMounts:
-      #       - name: yt-cookies
-      #         mountPath: "/etc/secrets"
-      #         readOnly: true
-      # volumes:
-      #   - name: yt-cookies
-      #     persistentVolumeClaim:
-      #       claimName: youtube-cookies
+          volumeMounts:
+            - name: yt-cookies
+              mountPath: "/etc/secrets"
+              readOnly: true
+      volumes:
+        - name: yt-cookies
+          secret:                  
+            secretName: youtube-cookies
