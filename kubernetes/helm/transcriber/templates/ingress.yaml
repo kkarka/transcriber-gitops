@@ -4,29 +4,24 @@ kind: Ingress
 metadata:
   name: transcriber-ingress
   annotations:
-    nginx.ingress.kubernetes.io/proxy-body-size: "200m"
-    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
-    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
-    # --- The API Gateway Rewrite Trick ---
-    nginx.ingress.kubernetes.io/use-regex: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
 spec:
-  ingressClassName: nginx
+  ingressClassName: alb
   rules:
-    - host: "{{ .Values.ingress.host }}"
+    - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
-          # If URL starts with /api, capture the rest ($2) and strip the /api
-          - path: /api(/|$)(.*)
-            pathType: ImplementationSpecific
+          - path: /api
+            pathType: Prefix
             backend:
               service:
                 name: transcriber-api
                 port:
                   number: 80
-          # If URL is anything else (frontend), pass it through exactly as is
-          - path: /()(.*)
-            pathType: ImplementationSpecific
+          - path: /
+            pathType: Prefix
             backend:
               service:
                 name: transcriber-frontend
