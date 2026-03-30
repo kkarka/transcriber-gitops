@@ -51,6 +51,8 @@ spec:
                 secretKeyRef:
                   name: transcriber-aws-secret
                   key: AWS_SECRET_ACCESS_KEY
+          resources:
+            {{- toYaml .Values.worker.resources | nindent 12 }}
       #     volumeMounts:
       #       - name: uploads-volume
       #         mountPath: /app/uploads
