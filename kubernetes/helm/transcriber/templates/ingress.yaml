@@ -7,14 +7,16 @@ metadata:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    # This annotation ensures the ALB handles path patterns correctly
+    alb.ingress.kubernetes.io/success-codes: '200'
 spec:
   ingressClassName: alb
   rules:
     - host: {{ .Values.ingress.host | quote }}
       http:
         paths:
-          - path: /api
-            pathType: Prefix
+          - path: /api/* # Added wildcard here
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: transcriber-api
