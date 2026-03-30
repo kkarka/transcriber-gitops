@@ -30,7 +30,7 @@ resource "aws_subnet" "public" {
   tags = {
     Name                                        = "transcriber-public-${var.azs[count.index]}-${var.environment}"
     "kubernetes.io/role/elb"                    = "1" 
-    "kubernetes.io/cluster/transcriber-cluster" = "shared"
+    "kubernetes.io/cluster/transcriber-cluster-${var.environment}" = "shared"
   }
 }
 
