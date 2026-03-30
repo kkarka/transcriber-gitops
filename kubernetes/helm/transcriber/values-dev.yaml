@@ -16,6 +16,7 @@ api:
       memory: "512Mi"
 
 worker:
+  replicaCount: 1
   repository: ghcr.io/kkarka/video-transcriber-worker
   resources:
     requests:
