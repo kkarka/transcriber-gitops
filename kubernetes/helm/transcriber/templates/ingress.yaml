@@ -4,11 +4,7 @@ kind: Ingress
 metadata:
   name: transcriber-ingress
   annotations:
-    alb.ingress.kubernetes.io/scheme: internet-facing
-    alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
-   # Adding priority ensures the API rule is checked BEFORE the Frontend rule
-    alb.ingress.kubernetes.io/group.order: '1'
+     {{- toYaml .Values.ingress.annotations | nindent 4 }}  
 spec:
   ingressClassName: alb
   rules:

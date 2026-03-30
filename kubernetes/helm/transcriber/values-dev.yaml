@@ -30,14 +30,16 @@ frontend:
 
 ingress:
   enabled: true
-  className: "alb" # Change this from nginx to alb
+  host: transcriber.arkadevops.in
   annotations:
+    kubernetes.io/ingress.class: alb
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
     alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
-    alb.ingress.kubernetes.io/certificate-arn: "arn:aws:acm:ap-south-1:894565488699:certificate/c45e1cfc-994b-47e9-861c-cddcbb6a181b"
+    alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:894565488699:certificate/c45e1cfc-994b-47e9-861c-cddcbb6a181b
     alb.ingress.kubernetes.io/ssl-redirect: '443'
-    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=300
+    alb.ingress.kubernetes.io/group.order: '1'
+    alb.ingress.kubernetes.io/healthcheck-path: /health
   hosts:
     - host: transcriber.arkadevops.in # Use your subdomain
       paths:
