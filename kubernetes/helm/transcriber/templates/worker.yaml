@@ -25,11 +25,6 @@ spec:
               value: "{{ .Values.database.user }}"
             - name: POSTGRES_DB
               value: "{{ .Values.database.databaseName }}"
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: transcriber-aws-secret
-                  key: POSTGRES_PASSWORD
             - name: REDIS_HOST
               value: "transcriber-redis"
             - name: DB_HOST
@@ -53,11 +48,3 @@ spec:
                   key: AWS_SECRET_ACCESS_KEY
           resources:
             {{- toYaml .Values.worker.resources | nindent 12 }}
-          volumeMounts:
-            - name: yt-cookies
-              mountPath: "/etc/secrets"
-              readOnly: true
-      volumes:
-        - name: yt-cookies
-          secret:                  
-            secretName: youtube-cookies

@@ -1,3 +1,5 @@
+data "aws_region" "current" {}
+
 module "networking" {
   source = "../../modules/networking"
 
@@ -23,10 +25,8 @@ module "database" {
 
 module "compute" {
   source = "../../modules/compute"
-
   environment = var.environment
-  
-  # MODULE CHAINING: We pass the exact subnets we created in step 1
+  region      = data.aws_region.current.name
   subnet_ids  = module.networking.public_subnet_ids
 }
 
@@ -34,4 +34,5 @@ module "storage" {
   source            = "../../modules/storage"
   environment       = var.environment
   video_bucket_name = var.video_bucket_name
+  eks_node_role_name = module.compute.eks_node_group_role_name
 }

@@ -30,12 +30,6 @@ spec:
               value: "{{ .Values.database.user }}"
             - name: POSTGRES_DB
               value: "{{ .Values.database.databaseName }}"
-            # Secure variable decrypted from Sealed Secrets
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: transcriber-aws-secret
-                  key: POSTGRES_PASSWORD
             # Tell the API where to find Redis and the DB inside the cluster
             - name: REDIS_HOST
               value: "transcriber-redis"
@@ -61,13 +55,6 @@ spec:
           # Dynamically injects the CPU/Memory limits based on the environment
           resources:
             {{- toYaml .Values.api.resources | nindent 12 }}
-          # volumeMounts:
-          #   - name: uploads-volume
-          #     mountPath: /app/uploads
-      # volumes:
-      #   - name: uploads-volume
-      #     persistentVolumeClaim:
-      #       claimName: transcriber-uploads
 ---
 apiVersion: v1
 kind: Service

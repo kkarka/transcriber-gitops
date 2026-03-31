@@ -65,6 +65,24 @@ resource "aws_iam_role_policy_attachment" "node_ecr_policy" {
   role       = aws_iam_role.eks_node_role.name
 }
 
+
+resource "aws_iam_role_policy" "rds_iam_auth" {
+  name = "transcriber-rds-auth-${var.environment}"
+  role = aws_iam_role.eks_node_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = "rds-db:connect"
+        Effect   = "Allow"
+        # Restricts login to the 'transcriberadmin' user on any RDS instance
+        Resource = "arn:aws:rds-db:${var.region}:*:dbuser:*/transcriberadmin"
+      }
+    ]
+  })
+}
+
 # ------------------------------------------------------
 # 4. THE SPOT INSTANCE NODE GROUP
 # ------------------------------------------------------

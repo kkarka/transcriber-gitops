@@ -17,3 +17,4 @@ variable "db_password" {
 variable "video_bucket_name" {
   type = string
 }
+
