@@ -35,7 +35,6 @@ ingress:
     alb.ingress.kubernetes.io/certificate-arn: arn:aws:acm:ap-south-1:894565488699:certificate/c45e1cfc-994b-47e9-861c-cddcbb6a181b
     alb.ingress.kubernetes.io/ssl-redirect: '443'
     alb.ingress.kubernetes.io/group.order: '1'
-    alb.ingress.kubernetes.io/healthcheck-path: /health
   hosts:
     - host: transcriber.arkadevops.in # Use your subdomain
       paths:
@@ -56,7 +55,8 @@ ingress:
 # We will encrypt the actual password shortly!
 database:
   user: "transcriberadmin"
-  databaseName: "transcriberdb?sslmode=require"
+  databaseName: "transcriberdb"
+  host: "transcriber-db-dev.c1we4qs0wcyx.ap-south-1.rds.amazonaws.com"
 storage:
   mode: "s3"
   bucketName: "transcriber-uploads-storage-arka-dev" # Make sure this matches your actual S3 bucket name
