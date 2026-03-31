@@ -2,7 +2,7 @@ environment: "development"
 replicaCount: 1
 image:
   # This tells Helm to pull the latest code merged into the develop branch
-  tag: "f753a70"
+  tag: "bef106c"
 api:
   repository: ghcr.io/kkarka/video-transcriber-api
   resources:
