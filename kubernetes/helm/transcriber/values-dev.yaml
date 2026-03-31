@@ -1,10 +1,8 @@
 environment: "development"
 replicaCount: 1
-
 image:
   # This tells Helm to pull the latest code merged into the develop branch
-  tag: "1.0.13"
-
+  tag: "f753a70"
 api:
   repository: ghcr.io/kkarka/video-transcriber-api
   resources:
@@ -14,21 +12,18 @@ api:
     limits:
       cpu: "500m"
       memory: "512Mi"
-
 worker:
   replicaCount: 1
   repository: ghcr.io/kkarka/video-transcriber-worker
   resources:
     requests:
       cpu: "200m"
-      memory: "512Mi"   # Minimum guaranteed memory
+      memory: "512Mi" # Minimum guaranteed memory
     limits:
-      cpu: "1000m"    # Allow up to 2 CPUs for faster Whisper processing
-      memory: "1Gi"   # Hard limit to match your docker-compose setup
-
+      cpu: "1000m" # Allow up to 2 CPUs for faster Whisper processing
+      memory: "1Gi" # Hard limit to match your docker-compose setup
 frontend:
   repository: ghcr.io/kkarka/video-transcriber-frontend
-
 ingress:
   enabled: true
   host: transcriber.arkadevops.in
@@ -58,13 +53,10 @@ ingress:
               name: transcriber-api
               port:
                 number: 80
-
 # We will encrypt the actual password shortly!
 database:
   user: "transcriberadmin"
   databaseName: "transcriberdb?sslmode=require"
-
-
 storage:
   mode: "s3"
   bucketName: "transcriber-uploads-storage-arka-dev" # Make sure this matches your actual S3 bucket name
